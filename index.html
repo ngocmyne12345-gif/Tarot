@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Tarot Learning - The Mouse</title>
+<style>
+    body {
+        font-family: Arial;
+        background: #1e1e2f;
+        color: white;
+        text-align: center;
+    }
+    h1 {
+        color: #ffd700;
+    }
+    .card {
+        display: inline-block;
+        margin: 10px;
+        padding: 10px;
+        background: #2c2c3e;
+        border-radius: 10px;
+        cursor: pointer;
+        width: 120px;
+    }
+    .card img {
+        width: 100px;
+        height: 160px;
+        border-radius: 5px;
+    }
+    .detail {
+        margin-top: 20px;
+        padding: 15px;
+        background: #2c2c3e;
+        border-radius: 10px;
+    }
+</style>
+</head>
+
+<body>
+
+<h1>🔮 Tarot Learning - The Mouse</h1>
+
+<h2>🌿 Nguyên tố</h2>
+<p>🗡 Kiếm: Tư duy, logic</p>
+<p>💧 Cúp: Cảm xúc, tình cảm</p>
+<p>🔥 Gậy: Hành động, đam mê</p>
+<p>🪙 Xu: Tiền bạc, vật chất</p>
+
+<h2>🔢 Ý nghĩa số</h2>
+<p>I: Khởi đầu</p>
+<p>II: Lựa chọn</p>
+<p>III: Phát triển</p>
+<p>IV: Ổn định</p>
+<p>V: Xung đột</p>
+<p>VI: Hài hòa</p>
+<p>VII: Thử thách</p>
+<p>VIII: Tiến bộ</p>
+<p>IX: Gần hoàn thành</p>
+<p>X: Kết thúc</p>
+
+<h2>🃏 Chọn lá bài</h2>
+
+<div id="cards"></div>
+
+<div id="detail" class="detail"></div>
+
+<script>
+const tarotCards = [
+
+{
+name:"The Fool",
+img:"https://upload.wikimedia.org/wikipedia/en/9/90/RWS_Tarot_00_Fool.jpg",
+upright:"Khởi đầu mới, tự do, dám thử",
+reversed:"Bốc đồng, thiếu suy nghĩ, dễ sai lầm",
+love:"Tình mới, cảm xúc trong sáng nhưng chưa ổn định",
+friendship:"Kết bạn mới, vui vẻ nhưng chưa sâu",
+study:"Bắt đầu học cái mới, còn thiếu kinh nghiệm",
+work:"Cơ hội mới nhưng cần cân nhắc kỹ"
+},
+
+{
+name:"The Magician",
+img:"https://upload.wikimedia.org/wikipedia/en/d/de/RWS_Tarot_01_Magician.jpg",
+upright:"Sáng tạo, làm chủ, có năng lực",
+reversed:"Thao túng, lừa dối, thiếu tự tin",
+love:"Chủ động theo đuổi tình yêu",
+friendship:"Người có ảnh hưởng trong nhóm",
+study:"Tiếp thu nhanh, học tốt",
+work:"Có kỹ năng, dễ đạt thành công"
+},
+
+{
+name:"The High Priestess",
+img:"https://upload.wikimedia.org/wikipedia/en/8/88/RWS_Tarot_02_High_Priestess.jpg",
+upright:"Trực giác mạnh, bí ẩn",
+reversed:"Mơ hồ, che giấu sự thật",
+love:"Tình cảm sâu nhưng khó hiểu",
+friendship:"Ít nói, giữ khoảng cách",
+study:"Học theo cảm nhận, tự nghiên cứu",
+work:"Cần quan sát trước khi hành động"
+},
+
+{
+name:"The Empress",
+img:"https://upload.wikimedia.org/wikipedia/en/d/d2/RWS_Tarot_03_Empress.jpg",
+upright:"Nuôi dưỡng, yêu thương, phát triển",
+reversed:"Phụ thuộc, thiếu quan tâm",
+love:"Tình yêu ngọt ngào, chăm sóc nhau",
+friendship:"Bạn bè quan tâm lẫn nhau",
+study:"Ổn định, dễ tiếp thu",
+work:"Phát triển tốt, thuận lợi"
+},
+
+{
+name:"The Emperor",
+img:"https://upload.wikimedia.org/wikipedia/en/c/c3/RWS_Tarot_04_Emperor.jpg",
+upright:"Quyền lực, kỷ luật, ổn định",
+reversed:"Gia trưởng, kiểm soát quá mức",
+love:"Mối quan hệ nghiêm túc",
+friendship:"Người lãnh đạo",
+study:"Cần kỷ luật cao",
+work:"Công việc ổn định, có vị trí"
+},
+
+{
+name:"The Hierophant",
+img:"https://upload.wikimedia.org/wikipedia/en/8/8d/RWS_Tarot_05_Hierophant.jpg",
+upright:"Truyền thống, chuẩn mực",
+reversed:"Phá cách, chống đối",
+love:"Mối quan hệ chính thức",
+friendship:"Quan hệ theo khuôn khổ",
+study:"Học theo hệ thống",
+work:"Công việc truyền thống"
+},
+
+{
+name:"The Lovers",
+img:"https://upload.wikimedia.org/wikipedia/en/d/db/RWS_Tarot_06_Lovers.jpg",
+upright:"Tình yêu, lựa chọn quan trọng",
+reversed:"Mâu thuẫn, thiếu hòa hợp",
+love:"Tình yêu sâu đậm",
+friendship:"Gắn kết mạnh",
+study:"Phân vân lựa chọn",
+work:"Quyết định quan trọng"
+},
+
+{
+name:"The Chariot",
+img:"https://upload.wikimedia.org/wikipedia/en/9/9b/RWS_Tarot_07_Chariot.jpg",
+upright:"Chiến thắng, kiểm soát",
+reversed:"Mất kiểm soát, thất bại",
+love:"Mối quan hệ tiến triển nhanh",
+friendship:"Có cạnh tranh",
+study:"Cố gắng sẽ đạt kết quả",
+work:"Thành công nhờ nỗ lực"
+},
+
+{
+name:"Strength",
+img:"https://upload.wikimedia.org/wikipedia/en/f/f5/RWS_Tarot_08_Strength.jpg",
+upright:"Kiên nhẫn, nội lực",
+reversed:"Thiếu tự tin, yếu đuối",
+love:"Bao dung, thấu hiểu",
+friendship:"Luôn hỗ trợ nhau",
+study:"Cần kiên trì",
+work:"Giữ bình tĩnh để thành công"
+},
+
+{
+name:"The Hermit",
+img:"https://upload.wikimedia.org/wikipedia/en/4/4d/RWS_Tarot_09_Hermit.jpg",
+upright:"Tìm bản thân, suy ngẫm",
+reversed:"Cô lập, lạc lối",
+love:"Cần thời gian suy nghĩ",
+friendship:"Ít giao tiếp",
+study:"Tự học hiệu quả",
+work:"Cần xem xét lại hướng đi"
+},
+
+{
+name:"Wheel of Fortune",
+img:"https://upload.wikimedia.org/wikipedia/en/3/3c/RWS_Tarot_10_Wheel_of_Fortune.jpg",
+upright:"May mắn, thay đổi tích cực",
+reversed:"Xui xẻo, trắc trở",
+love:"Mối quan hệ thay đổi",
+friendship:"Có biến động",
+study:"Cơ hội bất ngờ",
+work:"Thăng trầm"
+},
+
+{
+name:"Justice",
+img:"https://upload.wikimedia.org/wikipedia/en/e/e0/RWS_Tarot_11_Justice.jpg",
+upright:"Công bằng, sự thật",
+reversed:"Thiên vị, thiếu minh bạch",
+love:"Rõ ràng, công bằng",
+friendship:"Sòng phẳng",
+study:"Đánh giá đúng năng lực",
+work:"Liên quan luật lệ"
+},
+
+{
+name:"The Hanged Man",
+img:"https://upload.wikimedia.org/wikipedia/en/2/2b/RWS_Tarot_12_Hanged_Man.jpg",
+upright:"Hy sinh, nhìn khác đi",
+reversed:"Trì trệ, mắc kẹt",
+love:"Chờ đợi, chưa tiến triển",
+friendship:"Thiệt thòi",
+study:"Chậm tiến",
+work:"Bị trì hoãn"
+},
+
+{
+name:"Death",
+img:"https://upload.wikimedia.org/wikipedia/en/d/d7/RWS_Tarot_13_Death.jpg",
+upright:"Kết thúc để bắt đầu mới",
+reversed:"Chưa thể buông bỏ",
+love:"Kết thúc hoặc thay đổi lớn",
+friendship:"Xa cách",
+study:"Đổi hướng",
+work:"Chuyển đổi"
+},
+
+{
+name:"Temperance",
+img:"https://upload.wikimedia.org/wikipedia/en/f/f8/RWS_Tarot_14_Temperance.jpg",
+upright:"Cân bằng, hòa hợp",
+reversed:"Mất cân bằng",
+love:"Mối quan hệ ổn định",
+friendship:"Êm đềm",
+study:"Tiến triển đều",
+work:"Hợp tác tốt"
+},
+
+{
+name:"The Devil",
+img:"https://upload.wikimedia.org/wikipedia/en/5/55/RWS_Tarot_15_Devil.jpg",
+upright:"Ràng buộc, tiêu cực",
+reversed:"Giải thoát",
+love:"Mối quan hệ độc hại",
+friendship:"Lợi dụng",
+study:"Áp lực",
+work:"Bị kiểm soát"
+},
+
+{
+name:"The Tower",
+img:"https://upload.wikimedia.org/wikipedia/en/5/53/RWS_Tarot_16_Tower.jpg",
+upright:"Sụp đổ bất ngờ",
+reversed:"Tránh được hậu quả",
+love:"Đổ vỡ",
+friendship:"Xung đột lớn",
+study:"Biến cố",
+work:"Thay đổi đột ngột"
+},
+
+{
+name:"The Star",
+img:"https://upload.wikimedia.org/wikipedia/en/d/db/RWS_Tarot_17_Star.jpg",
+upright:"Hy vọng, chữa lành",
+reversed:"Mất niềm tin",
+love:"Chữa lành tình cảm",
+friendship:"An ủi",
+study:"Hy vọng",
+work:"Cơ hội mới"
+},
+
+{
+name:"The Moon",
+img:"https://upload.wikimedia.org/wikipedia/en/7/7f/RWS_Tarot_18_Moon.jpg",
+upright:"Ảo tưởng, lo lắng",
+reversed:"Rõ ràng hơn",
+love:"Không rõ ràng",
+friendship:"Hiểu lầm",
+study:"Mơ hồ",
+work:"Thiếu định hướng"
+},
+
+{
+name:"The Sun",
+img:"https://upload.wikimedia.org/wikipedia/en/1/17/RWS_Tarot_19_Sun.jpg",
+upright:"Hạnh phúc, thành công",
+reversed:"Niềm vui giảm",
+love:"Tình yêu vui vẻ",
+friendship:"Tích cực",
+study:"Kết quả tốt",
+work:"Thành công"
+},
+
+{
+name:"Judgement",
+img:"https://upload.wikimedia.org/wikipedia/en/d/dd/RWS_Tarot_20_Judgement.jpg",
+upright:"Thức tỉnh, cơ hội mới",
+reversed:"Hối tiếc",
+love:"Có thể quay lại",
+friendship:"Nhìn lại mối quan hệ",
+study:"Nhận ra sai lầm",
+work:"Đánh giá lại"
+},
+
+{
+name:"The World",
+img:"https://upload.wikimedia.org/wikipedia/en/f/ff/RWS_Tarot_21_World.jpg",
+upright:"Hoàn thành, viên mãn",
+reversed:"Chưa hoàn tất",
+love:"Hạnh phúc trọn vẹn",
+friendship:"Gắn kết lâu dài",
+study:"Đạt mục tiêu",
+work:"Thành tựu lớn"
+}
+
+/* 💧 CUPS */
+
+{
+name:"Ace of Cups",
+img:"https://upload.wikimedia.org/wikipedia/en/3/36/Cups01.jpg",
+upright:"Khởi đầu cảm xúc, tình yêu mới",
+reversed:"Chặn cảm xúc, tổn thương",
+love:"Tình yêu mới bắt đầu",
+friendship:"Kết bạn chân thành",
+study:"Có cảm hứng học",
+work:"Cơ hội mới nhẹ nhàng"
+},
+
+{
+name:"Two of Cups",
+img:"https://upload.wikimedia.org/wikipedia/en/f/f8/Cups02.jpg",
+upright:"Kết nối, hòa hợp",
+reversed:"Xa cách, lệch nhịp",
+love:"Cặp đôi gắn kết",
+friendship:"Bạn thân",
+study:"Hợp tác tốt",
+work:"Làm việc nhóm ổn"
+},
+
+{
+name:"Three of Cups",
+img:"https://upload.wikimedia.org/wikipedia/en/7/7a/Cups03.jpg",
+upright:"Niềm vui, tụ họp",
+reversed:"Drama, nói xấu",
+love:"Tình vui, nhẹ nhàng",
+friendship:"Hội bạn thân",
+study:"Thoải mái",
+work:"Team vui vẻ"
+},
+
+{
+name:"Four of Cups",
+img:"https://upload.wikimedia.org/wikipedia/en/3/35/Cups04.jpg",
+upright:"Chán nản, thờ ơ",
+reversed:"Mở lòng lại",
+love:"Thiếu cảm xúc",
+friendship:"Xa cách",
+study:"Mất động lực",
+work:"Không hứng thú"
+},
+
+{
+name:"Five of Cups",
+img:"https://upload.wikimedia.org/wikipedia/en/d/d7/Cups05.jpg",
+upright:"Thất vọng, buồn",
+reversed:"Vượt qua nỗi buồn",
+love:"Tổn thương",
+friendship:"Hiểu lầm",
+study:"Chán nản",
+work:"Thất bại nhỏ"
+},
+
+{
+name:"Six of Cups",
+img:"https://upload.wikimedia.org/wikipedia/en/1/17/Cups06.jpg",
+upright:"Ký ức, quá khứ",
+reversed:"Không buông được",
+love:"Người cũ quay lại",
+friendship:"Bạn cũ",
+study:"Nhớ kiến thức cũ",
+work:"Quay lại việc cũ"
+},
+
+{
+name:"Seven of Cups",
+img:"https://upload.wikimedia.org/wikipedia/en/a/ae/Cups07.jpg",
+upright:"Ảo tưởng, nhiều lựa chọn",
+reversed:"Rõ ràng hơn",
+love:"Không chắc chắn",
+friendship:"Không rõ ràng",
+study:"Phân tâm",
+work:"Nhiều lựa chọn"
+},
+
+{
+name:"Eight of Cups",
+img:"https://upload.wikimedia.org/wikipedia/en/6/60/Cups08.jpg",
+upright:"Rời bỏ, tìm hướng mới",
+reversed:"Không dứt khoát",
+love:"Rời đi",
+friendship:"Xa cách",
+study:"Đổi mục tiêu",
+work:"Nghỉ việc"
+},
+
+{
+name:"Nine of Cups",
+img:"https://upload.wikimedia.org/wikipedia/en/2/24/Cups09.jpg",
+upright:"Hài lòng, ước mơ đạt được",
+reversed:"Chưa đủ đầy",
+love:"Hạnh phúc",
+friendship:"Thoải mái",
+study:"Kết quả tốt",
+work:"Đạt mục tiêu"
+},
+
+{
+name:"Ten of Cups",
+img:"https://upload.wikimedia.org/wikipedia/en/8/84/Cups10.jpg",
+upright:"Viên mãn, hạnh phúc",
+reversed:"Thiếu trọn vẹn",
+love:"Gia đình hạnh phúc",
+friendship:"Gắn bó",
+study:"Ổn định",
+work:"Môi trường tốt"
+},
+
+/* 👑 HOÀNG GIA CUPS */
+
+{
+name:"Page of Cups",
+img:"https://upload.wikimedia.org/wikipedia/en/6/62/Cups11.jpg",
+upright:"Tin vui, cảm xúc mới",
+reversed:"Trẻ con, mơ mộng",
+love:"Crush dễ thương",
+friendship:"Bạn mới",
+study:"Học theo cảm xúc",
+work:"Cơ hội nhỏ"
+},
+
+{
+name:"Knight of Cups",
+img:"https://upload.wikimedia.org/wikipedia/en/f/fa/Cups12.jpg",
+upright:"Lãng mạn, theo đuổi",
+reversed:"Không thực tế",
+love:"Theo đuổi tình yêu",
+friendship:"Nhiệt tình",
+study:"Học theo cảm hứng",
+work:"Sáng tạo"
+},
+
+{
+name:"Queen of Cups",
+img:"https://upload.wikimedia.org/wikipedia/en/6/62/Cups13.jpg",
+upright:"Tinh tế, thấu hiểu",
+reversed:"Quá nhạy cảm",
+love:"Yêu sâu sắc",
+friendship:"Luôn lắng nghe",
+study:"Hiểu sâu",
+work:"Làm việc cảm xúc"
+},
+
+{
+name:"King of Cups",
+img:"https://upload.wikimedia.org/wikipedia/en/0/04/Cups14.jpg",
+upright:"Kiểm soát cảm xúc, trưởng thành",
+reversed:"Che giấu cảm xúc",
+love:"Yêu chín chắn",
+friendship:"Đáng tin",
+study:"Ổn định",
+work:"Lãnh đạo tốt"
+},
+
+/* 🔥 WANDS */
+
+{
+name:"Ace of Wands",
+img:"https://upload.wikimedia.org/wikipedia/en/1/11/Wands01.jpg",
+upright:"Khởi đầu, cảm hứng, năng lượng mới",
+reversed:"Thiếu động lực, trì hoãn",
+love:"Tình cảm bắt đầu nhanh, mãnh liệt",
+friendship:"Nhiệt tình, năng động",
+study:"Có động lực học",
+work:"Cơ hội mới"
+},
+
+{
+name:"Two of Wands",
+img:"https://upload.wikimedia.org/wikipedia/en/0/0f/Wands02.jpg",
+upright:"Lập kế hoạch, lựa chọn",
+reversed:"Do dự, sợ thay đổi",
+love:"Phân vân giữa lựa chọn",
+friendship:"Khoảng cách",
+study:"Chưa quyết định hướng",
+work:"Cân nhắc tương lai"
+},
+
+{
+name:"Three of Wands",
+img:"https://upload.wikimedia.org/wikipedia/en/f/ff/Wands03.jpg",
+upright:"Mở rộng, chờ kết quả",
+reversed:"Chậm tiến triển",
+love:"Mối quan hệ phát triển",
+friendship:"Kết nối xa",
+study:"Tiến bộ",
+work:"Cơ hội mở rộng"
+},
+
+{
+name:"Four of Wands",
+img:"https://upload.wikimedia.org/wikipedia/en/a/a4/Wands04.jpg",
+upright:"Ổn định, ăn mừng",
+reversed:"Thiếu ổn định",
+love:"Mối quan hệ vững",
+friendship:"Gắn bó",
+study:"Ổn định",
+work:"Môi trường tốt"
+},
+
+{
+name:"Five of Wands",
+img:"https://upload.wikimedia.org/wikipedia/en/9/9d/Wands05.jpg",
+upright:"Xung đột, cạnh tranh",
+reversed:"Tránh xung đột",
+love:"Cãi nhau",
+friendship:"Mâu thuẫn",
+study:"Áp lực cạnh tranh",
+work:"Cạnh tranh cao"
+},
+
+{
+name:"Six of Wands",
+img:"https://upload.wikimedia.org/wikipedia/en/3/3b/Wands06.jpg",
+upright:"Chiến thắng, được công nhận",
+reversed:"Thiếu tự tin",
+love:"Được chú ý",
+friendship:"Được ủng hộ",
+study:"Thành tích tốt",
+work:"Được công nhận"
+},
+
+{
+name:"Seven of Wands",
+img:"https://upload.wikimedia.org/wikipedia/en/e/e4/Wands07.jpg",
+upright:"Bảo vệ lập trường",
+reversed:"Bị áp đảo",
+love:"Cố giữ mối quan hệ",
+friendship:"Bị gây áp lực",
+study:"Phải cố gắng nhiều",
+work:"Cạnh tranh mạnh"
+},
+
+{
+name:"Eight of Wands",
+img:"https://upload.wikimedia.org/wikipedia/en/6/6b/Wands08.jpg",
+upright:"Nhanh chóng, tiến triển",
+reversed:"Trì hoãn",
+love:"Tiến triển nhanh",
+friendship:"Liên lạc nhiều",
+study:"Tiến bộ nhanh",
+work:"Công việc nhanh"
+},
+
+{
+name:"Nine of Wands",
+img:"https://upload.wikimedia.org/wikipedia/en/4/4d/Wands09.jpg",
+upright:"Kiên trì, phòng thủ",
+reversed:"Mệt mỏi, bỏ cuộc",
+love:"Đang giữ mối quan hệ",
+friendship:"Cảnh giác",
+study:"Áp lực nhưng cố",
+work:"Sắp hoàn thành"
+},
+
+{
+name:"Ten of Wands",
+img:"https://upload.wikimedia.org/wikipedia/en/0/0b/Wands10.jpg",
+upright:"Gánh nặng, áp lực",
+reversed:"Giải tỏa",
+love:"Mệt mỏi trong tình yêu",
+friendship:"Bị lợi dụng",
+study:"Quá tải",
+work:"Stress"
+},
+
+/* 👑 HOÀNG GIA WANDS */
+
+{
+name:"Page of Wands",
+img:"https://upload.wikimedia.org/wikipedia/en/6/6a/Wands11.jpg",
+upright:"Khám phá, năng lượng trẻ",
+reversed:"Thiếu định hướng",
+love:"Crush năng động",
+friendship:"Bạn mới vui vẻ",
+study:"Hứng thú học",
+work:"Ý tưởng mới"
+},
+
+{
+name:"Knight of Wands",
+img:"https://upload.wikimedia.org/wikipedia/en/1/16/Wands12.jpg",
+upright:"Hành động mạnh, liều lĩnh",
+reversed:"Bốc đồng",
+love:"Yêu nhanh, cháy",
+friendship:"Nhiệt nhưng thất thường",
+study:"Học nhanh nhưng chán nhanh",
+work:"Nhiều năng lượng"
+},
+
+{
+name:"Queen of Wands",
+img:"https://upload.wikimedia.org/wikipedia/en/0/0d/Wands13.jpg",
+upright:"Tự tin, quyến rũ",
+reversed:"Ghen tị",
+love:"Hấp dẫn, thu hút",
+friendship:"Nổi bật",
+study:"Chủ động",
+work:"Lãnh đạo tốt"
+},
+
+{
+name:"King of Wands",
+img:"https://upload.wikimedia.org/wikipedia/en/c/ce/Wands14.jpg",
+upright:"Lãnh đạo, tầm nhìn",
+reversed:"Áp đặt",
+love:"Chủ động dẫn dắt",
+friendship:"Người dẫn đầu",
+study:"Có mục tiêu rõ",
+work:"Thành công lớn"
+},
+
+/* 🪙 PENTACLES */
+
+{
+name:"Ace of Pentacles",
+img:"https://upload.wikimedia.org/wikipedia/en/f/fd/Pents01.jpg",
+upright:"Cơ hội mới về tiền bạc, vật chất",
+reversed:"Bỏ lỡ cơ hội",
+love:"Mối quan hệ ổn định",
+friendship:"Bạn đáng tin",
+study:"Cơ hội học tốt",
+work:"Công việc mới"
+},
+
+{
+name:"Two of Pentacles",
+img:"https://upload.wikimedia.org/wikipedia/en/9/9f/Pents02.jpg",
+upright:"Cân bằng, xoay xở",
+reversed:"Quá tải",
+love:"Không ổn định",
+friendship:"Thiếu thời gian",
+study:"Khó cân bằng học",
+work:"Áp lực"
+},
+
+{
+name:"Three of Pentacles",
+img:"https://upload.wikimedia.org/wikipedia/en/4/42/Pents03.jpg",
+upright:"Hợp tác, học hỏi",
+reversed:"Thiếu teamwork",
+love:"Cùng xây dựng",
+friendship:"Hợp tác tốt",
+study:"Học nhóm",
+work:"Teamwork"
+},
+
+{
+name:"Four of Pentacles",
+img:"https://upload.wikimedia.org/wikipedia/en/3/35/Pents04.jpg",
+upright:"Giữ chặt, tiết kiệm",
+reversed:"Buông lỏng",
+love:"Chiếm hữu",
+friendship:"Ích kỷ",
+study:"Thiếu chia sẻ",
+work:"Giữ tiền"
+},
+
+{
+name:"Five of Pentacles",
+img:"https://upload.wikimedia.org/wikipedia/en/9/96/Pents05.jpg",
+upright:"Khó khăn, thiếu thốn",
+reversed:"Vượt khó",
+love:"Thiếu quan tâm",
+friendship:"Xa cách",
+study:"Khó khăn",
+work:"Thiếu tiền"
+},
+
+{
+name:"Six of Pentacles",
+img:"https://upload.wikimedia.org/wikipedia/en/a/a6/Pents06.jpg",
+upright:"Cho và nhận, giúp đỡ",
+reversed:"Không công bằng",
+love:"Cho nhiều hơn nhận",
+friendship:"Giúp đỡ nhau",
+study:"Được hỗ trợ",
+work:"Cân bằng tài chính"
+},
+
+{
+name:"Seven of Pentacles",
+img:"https://upload.wikimedia.org/wikipedia/en/6/6a/Pents07.jpg",
+upright:"Kiên nhẫn, chờ kết quả",
+reversed:"Nản",
+love:"Chờ đợi",
+friendship:"Ít tiến triển",
+study:"Chậm",
+work:"Chưa có kết quả"
+},
+
+{
+name:"Eight of Pentacles",
+img:"https://upload.wikimedia.org/wikipedia/en/4/49/Pents08.jpg",
+upright:"Chăm chỉ, rèn luyện",
+reversed:"Lười biếng",
+love:"Ít thời gian cho tình yêu",
+friendship:"Tập trung bản thân",
+study:"Học chăm",
+work:"Nâng cao kỹ năng"
+},
+
+{
+name:"Nine of Pentacles",
+img:"https://upload.wikimedia.org/wikipedia/en/f/f0/Pents09.jpg",
+upright:"Độc lập, hưởng thụ",
+reversed:"Phụ thuộc",
+love:"Hạnh phúc một mình",
+friendship:"Ít phụ thuộc",
+study:"Tự học tốt",
+work:"Ổn định"
+},
+
+{
+name:"Ten of Pentacles",
+img:"https://upload.wikimedia.org/wikipedia/en/4/42/Pents10.jpg",
+upright:"Giàu có, ổn định lâu dài",
+reversed:"Thiếu ổn định",
+love:"Gia đình bền vững",
+friendship:"Lâu dài",
+study:"Ổn định",
+work:"Thành công lớn"
+},
+
+/* 👑 HOÀNG GIA PENTACLES */
+
+{
+name:"Page of Pentacles",
+img:"https://upload.wikimedia.org/wikipedia/en/e/ec/Pents11.jpg",
+upright:"Học hỏi, cơ hội mới",
+reversed:"Thiếu tập trung",
+love:"Tình cảm chậm",
+friendship:"Bạn chăm chỉ",
+study:"Học tốt",
+work:"Cơ hội học việc"
+},
+
+{
+name:"Knight of Pentacles",
+img:"https://upload.wikimedia.org/wikipedia/en/d/d5/Pents12.jpg",
+upright:"Chăm chỉ, ổn định",
+reversed:"Chậm chạp",
+love:"Yêu chậm nhưng chắc",
+friendship:"Đáng tin",
+study:"Kiên trì",
+work:"Ổn định"
+},
+
+{
+name:"Queen of Pentacles",
+img:"https://upload.wikimedia.org/wikipedia/en/8/88/Pents13.jpg",
+upright:"Thực tế, chăm sóc",
+reversed:"Quá lo vật chất",
+love:"Quan tâm thực tế",
+friendship:"Chu đáo",
+study:"Ổn định",
+work:"Quản lý tốt"
+},
+
+{
+name:"King of Pentacles",
+img:"https://upload.wikimedia.org/wikipedia/en/1/1c/Pents14.jpg",
+upright:"Giàu có, thành công",
+reversed:"Tham lam",
+love:"Ổn định lâu dài",
+friendship:"Chỗ dựa",
+study:"Thực tế",
+work:"Thành công lớn"
+}
+
+/* 🗡 SWORDS */
+
+{
+name:"Ace of Swords",
+img:"https://upload.wikimedia.org/wikipedia/en/1/1a/Swords01.jpg",
+upright:"Sự thật, яс rõ, khởi đầu tư duy mới",
+reversed:"Hiểu sai, thiếu rõ ràng",
+love:"Nói rõ cảm xúc",
+friendship:"Thẳng thắn",
+study:"Hiểu bài",
+work:"Ý tưởng mới"
+},
+
+{
+name:"Two of Swords",
+img:"https://upload.wikimedia.org/wikipedia/en/9/9e/Swords02.jpg",
+upright:"Phân vân, né tránh",
+reversed:"Quyết định sai",
+love:"Tránh đối mặt",
+friendship:"Không rõ ràng",
+study:"Lưỡng lự",
+work:"Khó chọn"
+},
+
+{
+name:"Three of Swords",
+img:"https://upload.wikimedia.org/wikipedia/en/0/02/Swords03.jpg",
+upright:"Tổn thương, đau lòng",
+reversed:"Hồi phục",
+love:"Tan vỡ",
+friendship:"Hiểu lầm",
+study:"Stress",
+work:"Áp lực"
+},
+
+{
+name:"Four of Swords",
+img:"https://upload.wikimedia.org/wikipedia/en/d/d4/Swords04.jpg",
+upright:"Nghỉ ngơi, hồi phục",
+reversed:"Kiệt sức",
+love:"Tạm dừng",
+friendship:"Ít liên lạc",
+study:"Cần nghỉ",
+work:"Nghỉ ngơi"
+},
+
+{
+name:"Five of Swords",
+img:"https://upload.wikimedia.org/wikipedia/en/3/3b/Swords05.jpg",
+upright:"Xung đột, thắng thua",
+reversed:"Hối hận",
+love:"Cãi vã",
+friendship:"Mâu thuẫn",
+study:"Cạnh tranh",
+work:"Drama"
+},
+
+{
+name:"Six of Swords",
+img:"https://upload.wikimedia.org/wikipedia/en/2/29/Swords06.jpg",
+upright:"Rời đi, chuyển hướng",
+reversed:"Không buông được",
+love:"Rời khỏi mối quan hệ",
+friendship:"Xa cách",
+study:"Đổi môi trường",
+work:"Chuyển việc"
+},
+
+{
+name:"Seven of Swords",
+img:"https://upload.wikimedia.org/wikipedia/en/3/34/Swords07.jpg",
+upright:"Lừa dối, giấu giếm",
+reversed:"Bị phát hiện",
+love:"Không trung thực",
+friendship:"Giấu chuyện",
+study:"Gian lận",
+work:"Thiếu minh bạch"
+},
+
+{
+name:"Eight of Swords",
+img:"https://upload.wikimedia.org/wikipedia/en/a/a7/Swords08.jpg",
+upright:"Bị kẹt, giới hạn",
+reversed:"Thoát ra",
+love:"Bị ràng buộc",
+friendship:"Không thoải mái",
+study:"Tự áp lực",
+work:"Bị kiểm soát"
+},
+
+{
+name:"Nine of Swords",
+img:"https://upload.wikimedia.org/wikipedia/en/2/2f/Swords09.jpg",
+upright:"Lo lắng, stress",
+reversed:"Giảm lo",
+love:"Lo sợ",
+friendship:"Áp lực",
+study:"Stress học",
+work:"Áp lực"
+},
+
+{
+name:"Ten of Swords",
+img:"https://upload.wikimedia.org/wikipedia/en/d/d4/Swords10.jpg",
+upright:"Kết thúc đau đớn",
+reversed:"Phục hồi",
+love:"Chấm dứt",
+friendship:"Kết thúc",
+study:"Thất bại",
+work:"Sụp đổ"
+},
+
+/* 👑 HOÀNG GIA SWORDS */
+
+{
+name:"Page of Swords",
+img:"https://upload.wikimedia.org/wikipedia/en/4/4c/Swords11.jpg",
+upright:"Tò mò, quan sát",
+reversed:"Nhiều chuyện",
+love:"Tìm hiểu",
+friendship:"Hóng chuyện",
+study:"Ham học",
+work:"Quan sát"
+},
+
+{
+name:"Knight of Swords",
+img:"https://upload.wikimedia.org/wikipedia/en/b/b0/Swords12.jpg",
+upright:"Nhanh, quyết liệt",
+reversed:"Nóng vội",
+love:"Tiến nhanh",
+friendship:"Thẳng quá",
+study:"Học nhanh",
+work:"Quyết đoán"
+},
+
+{
+name:"Queen of Swords",
+img:"https://upload.wikimedia.org/wikipedia/en/d/d4/Swords13.jpg",
+upright:"Lý trí, thẳng thắn",
+reversed:"Lạnh lùng",
+love:"Lý trí trong tình cảm",
+friendship:"Nói thẳng",
+study:"Rõ ràng",
+work:"Phân tích tốt"
+},
+
+{
+name:"King of Swords",
+img:"https://upload.wikimedia.org/wikipedia/en/3/33/Swords14.jpg",
+upright:"Trí tuệ, lãnh đạo",
+reversed:"Độc đoán",
+love:"Kiểm soát",
+friendship:"Nghiêm túc",
+study:"Tư duy logic",
+work:"Lãnh đạo"
+}
+
+function showTheory() {
+
+    document.getElementById("detail").innerHTML = `
+    <h2>🧠 TIP ĐỌC TAROT</h2>
+
+    <h3>🔮 Major vs Minor</h3>
+    <p>
+    Major Arcana → chuyện lớn, bước ngoặt<br>
+    Minor Arcana → chuyện nhỏ, hằng ngày<br><br>
+
+    👉 Nhiều Major → vấn đề quan trọng<br>
+    👉 Nhiều Minor → vấn đề tạm thời
+    </p>
+
+    <h3>🔥 Nguyên tố</h3>
+    <p>
+    🗡 Kiếm → suy nghĩ, stress<br>
+    💧 Cúp → tình cảm<br>
+    🔥 Gậy → hành động<br>
+    🪙 Xu → tiền bạc, học tập
+    </p>
+
+    <h3>🔢 Con số</h3>
+    <p>
+    Ace → bắt đầu<br>
+    2 → lựa chọn<br>
+    3 → phát triển<br>
+    5 → xung đột<br>
+    7 → thử thách<br>
+    10 → kết thúc
+    </p>
+
+    <h3>👑 Hoàng gia</h3>
+    <p>
+    Page → mới, trẻ<br>
+    Knight → hành động<br>
+    Queen → cảm xúc<br>
+    King → kiểm soát
+    </p>
+
+    <h3>🔄 Xuôi vs Ngược</h3>
+    <p>
+    Xuôi → năng lượng đúng<br>
+    Ngược → bị chặn / yếu đi / tiêu cực hơn
+    </p>
+    `;
+}
+
+function getSpreadMeaning(num) {
+
+    let text = "<hr><h2>📖 Ý nghĩa trải bài:</h2>";
+
+    if (num == 4)
+        text += "👉 Tổng quan - Vấn đề - Nguyên nhân - Kết quả<br>";
+
+    if (num == 5)
+        text += "👉 Quá khứ - Hiện tại - Tương lai - Lời khuyên - Kết quả<br>";
+
+    if (num == 6)
+        text += "👉 Quá khứ - Hiện tại - Tương lai - Suy nghĩ - Ảnh hưởng - Kết quả<br>";
+
+    if (num == 7)
+        text += "👉 Bạn - Đối phương - Cảm xúc - Hành động - Trở ngại - Lời khuyên - Kết quả<br>";
+
+    if (num == 8)
+        text += "👉 Tổng quan - Quá khứ - Hiện tại - Tương lai gần - Tương lai xa - Trở ngại - Lời khuyên - Kết quả<br>";
+
+    return text;
+}
+
+
