@@ -975,6 +975,36 @@ function showTheory() {
     Xuôi → năng lượng đúng<br>
     Ngược → bị chặn / yếu đi / tiêu cực hơn
     </p>
+}
+
+// 👉 render card
+const cardContainer = document.getElementById("cards");
+
+tarotCards.forEach((card, index) => {
+    const div = document.createElement("div");
+    div.className = "card";
+
+    div.innerHTML = `
+        <img src="${card.img}">
+        <p>${card.name}</p>
+    `;
+
+    div.onclick = () => showCard(card);
+
+    cardContainer.appendChild(div);
+});
+
+// 👉 show detail khi click
+function showCard(card) {
+    document.getElementById("detail").innerHTML = `
+        <h2>${card.name}</h2>
+        <p>✨ Xuôi: ${card.upright}</p>
+        <p>🔄 Ngược: ${card.reversed}</p>
+        <hr>
+        <p>💖 Tình yêu: ${card.love}</p>
+        <p>🤝 Bạn bè: ${card.friendship}</p>
+        <p>📚 Học tập: ${card.study}</p>
+        <p>💼 Công việc: ${card.work}</p>
     `;
 }
 
