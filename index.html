@@ -3,36 +3,42 @@
 <head>
 <meta charset="UTF-8">
 <title>Tarot Learning - The Mouse</title>
+
 <style>
-    body {
-        font-family: Arial;
-        background: #1e1e2f;
-        color: white;
-        text-align: center;
-    }
-    h1 {
-        color: #ffd700;
-    }
-    .card {
-        display: inline-block;
-        margin: 10px;
-        padding: 10px;
-        background: #2c2c3e;
-        border-radius: 10px;
-        cursor: pointer;
-        width: 120px;
-    }
-    .card img {
-        width: 100px;
-        height: 160px;
-        border-radius: 5px;
-    }
-    .detail {
-        margin-top: 20px;
-        padding: 15px;
-        background: #2c2c3e;
-        border-radius: 10px;
-    }
+body {
+    font-family: Arial;
+    background: #1e1e2f;
+    color: white;
+    text-align: center;
+}
+h1 { color: #ffd700; }
+
+.card {
+    display: inline-block;
+    margin: 10px;
+    padding: 10px;
+    background: #2c2c3e;
+    border-radius: 10px;
+    cursor: pointer;
+    width: 120px;
+    transition: 0.2s;
+}
+.card:hover {
+    transform: scale(1.05);
+}
+
+.card img {
+    width: 100px;
+    height: 160px;
+    border-radius: 5px;
+}
+
+.detail {
+    margin-top: 20px;
+    padding: 15px;
+    background: #2c2c3e;
+    border-radius: 10px;
+}
 </style>
 </head>
 
@@ -40,34 +46,17 @@
 
 <h1>🔮 Tarot Learning - The Mouse</h1>
 
-<h2>🌿 Nguyên tố</h2>
-<p>🗡 Kiếm: Tư duy, logic</p>
-<p>💧 Cúp: Cảm xúc, tình cảm</p>
-<p>🔥 Gậy: Hành động, đam mê</p>
-<p>🪙 Xu: Tiền bạc, vật chất</p>
-
-<h2>🔢 Ý nghĩa số</h2>
-<p>I: Khởi đầu</p>
-<p>II: Lựa chọn</p>
-<p>III: Phát triển</p>
-<p>IV: Ổn định</p>
-<p>V: Xung đột</p>
-<p>VI: Hài hòa</p>
-<p>VII: Thử thách</p>
-<p>VIII: Tiến bộ</p>
-<p>IX: Gần hoàn thành</p>
-<p>X: Kết thúc</p>
-
 <h2>🃏 Chọn lá bài</h2>
-
 <div id="cards"></div>
 
-<div id="detail" class="detail"></div>
+<div id="detail" class="detail">👉 Bấm vào lá bài để xem</div>
 
 <script>
+
+// 👉 (T giữ mẫu vài lá thôi cho nhẹ, ní có thể paste full lại sau)
 const tarotCards = [
+
 {
-    
 name:"The Fool",
 img:"https://upload.wikimedia.org/wikipedia/en/9/90/RWS_Tarot_00_Fool.jpg",
 upright:"Khởi đầu mới, tự do, dám thử",
